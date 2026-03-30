@@ -106,12 +106,37 @@ colors: {
 
 ## Hero section
 
-- Fondo: negro
-- Imagen o video del showroom nocturno al fondo con overlay oscuro
-- Título: blanco, muy grande, bold
-- Subtítulo: gris claro
-- Botones: rojo (primario) + outline (secundario)
-- Efecto: leve parallax o gradiente animado de negro a gris muy oscuro
+### Layout (inspirado en plantilla Figma de referencia)
+- Split screen: texto a la izquierda, auto a la derecha
+- Texto grande a la izquierda: "Encontrá tu" en blanco, "AUTO IDEAL" en rojo, botón "Ver vehículos"
+- Imagen del auto a la derecha: recortada, sin fondo, sobre negro
+- Texto gigante marca en el fondo (como "TOYOTA", "RAM") en gris muy oscuro, decorativo
+- Indicadores de slide (puntitos) a la derecha del auto
+- Flechas de navegación prev/next
+
+### Animación del hero (Framer Motion — obligatorio)
+- Al hacer scroll hacia abajo, el auto de la derecha se desvanece y escala hacia atrás (opacity 1→0, scale 1→0.8)
+- El texto de la izquierda se desliza hacia arriba y desaparece (y: 0→-40px, opacity 1→0)
+- Efecto suave, no brusco — usar `useScroll` + `useTransform` de Framer Motion
+- Instalar: `npm install framer-motion`
+
+### Barra de búsqueda rápida (debajo del hero)
+- Fondo blanco/gris muy claro sobre el negro del hero — contraste llamativo
+- Dropdowns: Nuevo/Usado · Marca · Modelo
+- Botón de búsqueda rojo con ícono lupa
+- Igual al diseño de la plantilla Figma
+
+### Sección de marcas (debajo de la búsqueda)
+- Row horizontal con logos de marcas en gris/blanco
+- Al hover se iluminan
+- Marcas sugeridas para JR: Toyota, Volkswagen, Ford, Chevrolet, RAM, Renault, Peugeot
+- Logos en SVG o imagen, monocromáticos
+
+### Cards de vehículos (estilo plantilla Figma)
+- Imagen del auto a la izquierda, datos a la derecha
+- Datos: Año, Modelo/Versión, Combustible, Precio
+- Botón "Ver detalles" oscuro con flecha
+- Fondo de card: blanco/gris muy claro con sombra sutil (a pesar del fondo oscuro general, las cards pueden ser claras para contraste — decidir según resultado visual)
 
 ---
 
