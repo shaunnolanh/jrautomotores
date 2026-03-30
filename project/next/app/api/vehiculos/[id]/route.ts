@@ -19,6 +19,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     precio: raw.precio ? Number(raw.precio) : undefined,
     kilometraje: raw.kilometraje ? Number(raw.kilometraje) : undefined,
   });
+  const payload = vehiculoSchema.partial().parse(await request.json());
   const supabase = createSupabaseServer();
   const { data, error } = await supabase.from('vehiculos').update(payload).eq('id', params.id).select('*').single();
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });

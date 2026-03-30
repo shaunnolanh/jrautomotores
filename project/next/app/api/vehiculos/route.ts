@@ -10,6 +10,10 @@ export async function GET(request: NextRequest) {
   let query = supabase.from('vehiculos').select('*');
   if (!(all && isAdmin)) query = query.eq('estado', 'disponible');
   const { data, error } = await query.order('created_at', { ascending: false });
+
+export async function GET() {
+  const supabase = createSupabaseServer();
+  const { data, error } = await supabase.from('vehiculos').select('*').eq('estado', 'disponible');
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json(data);
 }
@@ -23,6 +27,7 @@ export async function POST(request: NextRequest) {
     precio: Number(raw.precio),
     kilometraje: Number(raw.kilometraje),
   });
+  const payload = vehiculoSchema.parse(await request.json());
   const supabase = createSupabaseServer();
   const { data, error } = await supabase.from('vehiculos').insert(payload).select('*').single();
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
