@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
@@ -34,3 +35,22 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+=======
+# JR Automotores - Next.js
+
+Proyecto base completo para JR Automotores sobre Next.js 14 (App Router), TypeScript, Tailwind, Supabase y Vercel.
+
+## Instalación
+
+```bash
+npm install
+npm run dev
+```
+
+## Seguridad aplicada
+- Middleware con headers de seguridad y CSP
+- Auth admin con JWT httpOnly usando jose
+- Rate limiting de login por IP (5 intentos / 10 min)
+- Validaciones Zod cliente/servidor
+- RLS en `supabase/schema.sql`
+>>>>>>> 1dfa5b4097183eabb9e323ff10e30fe08108de2a

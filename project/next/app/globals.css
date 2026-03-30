@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @import "tailwindcss";
 
 :root {
@@ -23,4 +24,26 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+=======
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --rojo: #e8232a;
+  --rojo-hover: #c8102e;
+  --negro: #080808;
+  --gris-oscuro: #111111;
+  --gris-medio: #1c1c1c;
+  --gris-borde: #2a2a2a;
+  --blanco: #ffffff;
+  --gris-texto: #a0a0a0;
+  --dorado: #c9a84c;
+}
+
+body {
+  background: var(--negro);
+  color: var(--blanco);
+  font-family: Inter, system-ui, sans-serif;
+>>>>>>> 1dfa5b4097183eabb9e323ff10e30fe08108de2a
 }
