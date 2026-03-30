@@ -1,20 +1,18 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-[#1A1A2E] py-10 text-white">
+    <footer className="border-t border-gris-borde bg-[#090909] py-10">
       <div className="mx-auto grid max-w-6xl gap-6 px-4 md:grid-cols-2">
         <div>
-          <p className="text-2xl font-black tracking-wide">JR AUTOMOTORES</p>
-          <p className="mt-3 text-sm text-white/80">Av. España 1090, La Falda, Córdoba</p>
+          <p className="text-2xl font-black tracking-wide">
+            <span className="text-rojo">JR</span> AUTOMOTORES
+          </p>
+          <p className="mt-3 text-sm text-gris-texto">Av. España 1090, La Falda, Córdoba</p>
         </div>
-
-        <div className="space-y-2 text-sm text-white/80 md:text-right">
-          <p>Lun-Vie 9:00-13:00 y 16:00-20:00</p>
+        <div className="space-y-2 text-sm text-gris-texto md:text-right">
+          <p>Lunes a Viernes · 9:00 a 13:00 y 16:30 a 20:00</p>
           <p>Teléfono: 03548 50-3428</p>
-          <a
-            href="https://wa.me/5493548503428"
-            className="inline-flex rounded-full bg-[#25D366] px-4 py-2 font-semibold text-[#0f3f25]"
-          >
-            WhatsApp
+          <a href="https://wa.me/5493548503428" className="inline-block text-rojo hover:text-white">
+            WhatsApp: +54 9 3548 50-3428
           </a>
         </div>
       </div>
