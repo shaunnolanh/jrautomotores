@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --rojo: #e8232a;
+  --rojo-hover: #c8102e;
+  --negro: #080808;
+  --gris-oscuro: #111111;
+  --gris-medio: #1c1c1c;
+  --gris-borde: #2a2a2a;
+  --blanco: #ffffff;
+  --gris-texto: #a0a0a0;
+  --dorado: #c9a84c;
+}
+
+body {
+  background: var(--negro);
+  color: var(--blanco);
+  font-family: Inter, system-ui, sans-serif;
+}
