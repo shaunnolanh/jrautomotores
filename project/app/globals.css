@@ -15,3 +15,21 @@ body {
   color: var(--texto-principal);
   font-family: Inter, system-ui, sans-serif;
 }
+
+@keyframes reviews-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.reviews-track {
+  width: max-content;
+  animation: reviews-marquee 32s linear infinite;
+}
+
+.reviews-track:hover {
+  animation-play-state: paused;
+}
