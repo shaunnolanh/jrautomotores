@@ -10,10 +10,9 @@ export default function HeroSection() {
   const [current, setCurrent] = useState(0);
   const { scrollY } = useScroll();
 
-  const autoOpacity = useTransform(scrollY, [0, 320], [1, 0]);
-  const autoScale = useTransform(scrollY, [0, 320], [1, 0.8]);
-  const textY = useTransform(scrollY, [0, 320], [0, -40]);
-  const textOpacity = useTransform(scrollY, [0, 320], [1, 0]);
+  const textY = useTransform(scrollY, [0, 380], [0, -45]);
+  const carY = useTransform(scrollY, [0, 380], [0, -70]);
+  const sectionOpacity = useTransform(scrollY, [0, 420], [1, 0.25]);
 
   useEffect(() => {
     const interval = setInterval(() => setCurrent((prev) => (prev + 1) % slides.length), 4000);
@@ -21,57 +20,65 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden border-b border-gris-borde/70 pt-14">
-      <div className="pointer-events-none absolute inset-x-0 top-16 select-none text-center text-[28vw] font-black uppercase leading-none text-[#141414] lg:text-[16vw]">
-        JR
-      </div>
-      <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 pb-16 lg:grid-cols-2 lg:pb-24">
-        <motion.div style={{ y: textY, opacity: textOpacity }} className="space-y-7">
-          <h1 className="text-4xl font-black uppercase leading-[0.95] md:text-6xl lg:text-7xl">
-            <span className="block text-white">Encontrá tu</span>
-            <span className="block text-rojo">Auto ideal</span>
+    <motion.section style={{ opacity: sectionOpacity }} className="relative overflow-hidden bg-fondo-base pt-10 md:pt-14">
+      <span className="pointer-events-none absolute left-1/2 top-8 hidden -translate-x-1/2 select-none text-[18vw] font-black leading-none text-[#f0f0f3] lg:block">
+        AUTO
+      </span>
+
+      <div className="relative mx-auto grid max-w-6xl gap-10 px-4 pb-24 lg:grid-cols-2 lg:items-center">
+        <motion.div style={{ y: textY }} className="space-y-7">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-texto-secundario">JR Automotores · La Falda</p>
+          <h1 className="text-4xl font-black leading-[0.95] text-texto-principal md:text-6xl">
+            Encontrá tu próximo
+            <span className="block text-rojo">auto ideal</span>
           </h1>
-          <p className="max-w-xl text-base text-gris-texto md:text-lg">
-            Selección premium de autos nuevos y usados en La Falda, Córdoba.
+          <p className="max-w-xl text-base text-texto-secundario md:text-lg">
+            Vehículos nuevos y usados seleccionados, con asesoramiento transparente y financiación a tu medida.
           </p>
-          <Link
-            href="/vehiculos"
-            className="inline-flex items-center rounded-full bg-rojo px-7 py-3 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-rojo-hover"
-          >
-            Ver vehículos
-          </Link>
+          <div className="flex flex-wrap items-center gap-3">
+            <Link
+              href="/vehiculos"
+              className="inline-flex items-center rounded-full bg-texto-principal px-7 py-3 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#111122]"
+            >
+              Ver vehículos
+            </Link>
+            <Link
+              href="/contacto"
+              className="inline-flex items-center rounded-full border border-neutral-300 px-7 py-3 text-sm font-semibold uppercase tracking-wide text-texto-principal transition-colors hover:border-rojo hover:text-rojo"
+            >
+              Agendar visita
+            </Link>
+          </div>
         </motion.div>
 
-        <motion.div style={{ opacity: autoOpacity, scale: autoScale }} className="relative">
-          <div className="relative h-[240px] overflow-hidden rounded-3xl border border-gris-borde bg-[#0f0f0f] p-4 shadow-rojo sm:h-[320px] lg:h-[380px]">
+        <motion.div style={{ y: carY }} className="relative">
+          <div className="relative h-[240px] overflow-hidden rounded-[28px] bg-white p-3 shadow-card sm:h-[320px] lg:h-[390px]">
             <AnimatePresence mode="wait">
               <motion.img
                 key={slides[current]}
                 src={slides[current]}
                 alt="Vehículo destacado"
                 className="h-full w-full object-contain"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.6, ease: 'easeInOut' }}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.5, ease: 'easeInOut' }}
               />
             </AnimatePresence>
           </div>
-          <div className="mt-5 flex justify-center gap-2">
+          <div className="mt-6 flex justify-center gap-2">
             {slides.map((slide, index) => (
               <button
                 key={slide}
                 type="button"
                 onClick={() => setCurrent(index)}
-                className={`h-2.5 rounded-full transition-all ${
-                  current === index ? 'w-7 bg-rojo' : 'w-2.5 bg-white/40'
-                }`}
+                className={`h-2.5 rounded-full transition-all ${current === index ? 'w-8 bg-rojo' : 'w-2.5 bg-neutral-300'}`}
                 aria-label={`Ir a imagen ${index + 1}`}
               />
             ))}
           </div>
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }
