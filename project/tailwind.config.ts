@@ -6,20 +6,18 @@ const config: Config = {
     extend: {
       colors: {
         rojo: '#E8232A',
-        'rojo-hover': '#C8102E',
-        negro: '#080808',
-        'gris-oscuro': '#111111',
-        'gris-medio': '#1C1C1C',
-        'gris-borde': '#2A2A2A',
-        blanco: '#FFFFFF',
-        'gris-texto': '#A0A0A0',
-        dorado: '#C9A84C',
+        'rojo-hover': '#CC1B22',
+        'fondo-base': '#FFFFFF',
+        'fondo-suave': '#F5F5F5',
+        'texto-principal': '#1A1A2E',
+        'texto-secundario': '#6B6B6B',
       },
       boxShadow: {
-        rojo: '0 0 20px rgba(232,35,42,0.15)',
+        card: '0 12px 35px rgba(26, 26, 46, 0.08)',
       },
     },
   },
   plugins: [],
 };
+
 export default config;

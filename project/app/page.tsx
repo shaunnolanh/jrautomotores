@@ -9,7 +9,7 @@ export default async function HomePage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-negro">
+      <main className="min-h-screen bg-fondo-base">
         <HomePageContent destacados={destacados.slice(0, 8)} />
       </main>
       <Footer />
