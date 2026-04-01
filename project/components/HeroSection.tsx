@@ -1,70 +1,39 @@
 'use client';
 
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+
+const slides = ['/slide_hero_1.jpg', '/slide_hero_2.jpg', '/slide_hero_3.jpg'];
 
 export default function HeroSection() {
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const rafRef = useRef<number | null>(null);
-  const [videoDuration, setVideoDuration] = useState(0);
+  const [current, setCurrent] = useState(0);
+  const { scrollY } = useScroll();
+
+  const textY = useTransform(scrollY, [0, 380], [0, -45]);
+  const carY = useTransform(scrollY, [0, 380], [0, -70]);
+  const sectionOpacity = useTransform(scrollY, [0, 420], [1, 0.25]);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const handleMetadata = () => {
-      if (Number.isFinite(video.duration)) {
-        setVideoDuration(video.duration);
-        video.currentTime = 0;
-      }
-    };
-
-    video.pause();
-    video.addEventListener('loadedmetadata', handleMetadata);
-
-    return () => {
-      video.removeEventListener('loadedmetadata', handleMetadata);
-    };
+    const interval = setInterval(() => setCurrent((prev) => (prev + 1) % slides.length), 4000);
+    return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    if (!videoDuration) return;
-
-    const updateTimeline = () => {
-      const section = sectionRef.current;
-      const video = videoRef.current;
-      if (!section || !video) return;
-
-      const rect = section.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const travel = rect.height - viewportHeight;
-      const scrolled = Math.min(Math.max(-rect.top, 0), Math.max(travel, 1));
-      const progress = travel <= 0 ? 0 : scrolled / travel;
-      const targetTime = videoDuration * progress;
-
-      video.currentTime += (targetTime - video.currentTime) * 0.18;
-      rafRef.current = requestAnimationFrame(updateTimeline);
-    };
-
-    rafRef.current = requestAnimationFrame(updateTimeline);
-
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [videoDuration]);
-
   return (
-    <section ref={sectionRef} className="relative min-h-[190vh] bg-fondo-base">
-      <div className="sticky top-0 mx-auto grid min-h-screen max-w-6xl items-center gap-10 px-4 py-10 lg:grid-cols-[1fr_1.05fr] lg:gap-14">
-        <div className="space-y-7">
-          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-texto-secundario">JR Automotores · La Falda</p>
-          <h1 className="text-4xl font-black leading-[0.95] text-texto-principal sm:text-5xl md:text-6xl">
+    <motion.section style={{ opacity: sectionOpacity }} className="relative overflow-hidden bg-fondo-base pt-10 md:pt-14">
+      <span className="pointer-events-none absolute left-1/2 top-8 hidden -translate-x-1/2 select-none text-[18vw] font-black leading-none text-[#f0f0f3] lg:block">
+        AUTO
+      </span>
+
+      <div className="relative mx-auto grid max-w-6xl gap-10 px-4 pb-24 lg:grid-cols-2 lg:items-center">
+        <motion.div style={{ y: textY }} className="space-y-7">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-texto-secundario">JR Automotores · La Falda</p>
+          <h1 className="text-4xl font-black leading-[0.95] text-texto-principal md:text-6xl">
             Encontrá tu próximo
-            <span className="mt-2 block text-rojo">auto ideal</span>
+            <span className="block text-rojo">auto ideal</span>
           </h1>
           <p className="max-w-xl text-base text-texto-secundario md:text-lg">
-            Selección premium de usados y nuevos con asesoramiento real, financiación flexible y acompañamiento en todo el proceso.
+            Vehículos nuevos y usados seleccionados, con asesoramiento transparente y financiación a tu medida.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <Link
@@ -80,25 +49,36 @@ export default function HeroSection() {
               Agendar visita
             </Link>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="relative">
-          <div className="absolute -inset-6 -z-10 rounded-[40px] bg-gradient-to-br from-rojo/15 via-transparent to-texto-principal/10 blur-2xl" />
-          <div className="overflow-hidden rounded-[32px] border border-white/70 bg-white/90 p-3 shadow-card backdrop-blur">
-            <video
-              ref={videoRef}
-              src="/hero/cronos-scroll.mp4"
-              muted
-              playsInline
-              preload="auto"
-              className="h-[280px] w-full rounded-[24px] bg-[#f4f4f7] object-cover sm:h-[360px] lg:h-[440px]"
-            />
+        <motion.div style={{ y: carY }} className="relative">
+          <div className="relative h-[240px] overflow-hidden rounded-[28px] bg-white p-3 shadow-card sm:h-[320px] lg:h-[390px]">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={slides[current]}
+                src={slides[current]}
+                alt="Vehículo destacado"
+                className="h-full w-full object-contain"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.5, ease: 'easeInOut' }}
+              />
+            </AnimatePresence>
           </div>
-          <p className="mt-4 text-center text-xs font-medium uppercase tracking-[0.14em] text-texto-secundario">
-            Animación controlada por scroll
-          </p>
-        </div>
+          <div className="mt-6 flex justify-center gap-2">
+            {slides.map((slide, index) => (
+              <button
+                key={slide}
+                type="button"
+                onClick={() => setCurrent(index)}
+                className={`h-2.5 rounded-full transition-all ${current === index ? 'w-8 bg-rojo' : 'w-2.5 bg-neutral-300'}`}
+                aria-label={`Ir a imagen ${index + 1}`}
+              />
+            ))}
+          </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }
